@@ -62,6 +62,18 @@ public class CGestoreChat {
         else if(operazione.equals("e")) this.ListaPacchettiFineConnessione.add(pacchettoDaInserire);
     }
     
+    synchronized public void EliminaTentativiConnessioni(){
+        if(!connessioneLibera){
+            String indirizzo = getIndirizzoStringa();
+            for(int i = 0; i < this.ListaPacchettiConnessione.size(); i++){
+                if(!this.ListaPacchettiConnessione.get(i).getIndirizzo().equals(indirizzo)){
+                    this.ListaPacchettiConnessione.remove(i);
+                }
+            }
+        }
+        
+    }
+    
     synchronized public CPacchetto IsPresenteInListaPacchettiConnessione(String indirizzo){
         int indice = indirizzo.indexOf("/");
         indirizzo = indirizzo.substring(indice + 1, indirizzo.length());

@@ -54,6 +54,8 @@ public class ThreadInstauraConnessione extends Thread {
             InviaY();
         }
         
+        ThreadRifiutaConnessione trc1 = new ThreadRifiutaConnessione(this.gestore);
+        trc1.start();
     }
     
     public void InviaY(){
@@ -62,5 +64,6 @@ public class ThreadInstauraConnessione extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(ThreadInstauraConnessione.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("CONNESSIONE STABILITA");
     }
 }
