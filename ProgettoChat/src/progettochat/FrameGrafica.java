@@ -64,7 +64,6 @@ public class FrameGrafica extends javax.swing.JFrame {
 
     private void ConnettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnettiActionPerformed
         try {
-            // TODO add your handling code here:
             gestore.InstauraConnessione(IndirizzoIP.getText());
         } catch (UnknownHostException ex) {
             Logger.getLogger(FrameGrafica.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,8 +100,14 @@ public class FrameGrafica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CGestoreChat GestoreChat = new CGestoreChat();
-                ThreadAscolto ThreadAscolto1 = new ThreadAscolto();
+                CGestoreChat GestoreChat = null;
+                try {
+                    GestoreChat = new CGestoreChat();
+                } catch (SocketException ex) {
+                    Logger.getLogger(FrameGrafica.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                ThreadAscolto ThreadAscolto1 = null;
                 try {
                     ThreadAscolto1 = new ThreadAscolto(GestoreChat, 2003);
                 } catch (SocketException ex) {

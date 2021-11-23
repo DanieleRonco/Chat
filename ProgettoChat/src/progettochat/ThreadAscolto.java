@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 public class ThreadAscolto extends Thread {
     private DatagramSocket ascolto;
     private CGestoreChat gestore;
-
-    public ThreadAscolto() {
-        this.ascolto = null;
-        this.gestore = null;
-    }
     
+    public ThreadAscolto() throws SocketException {
+        this.ascolto = new DatagramSocket(2003);
+        this.gestore = new CGestoreChat();
+    }
+
     public ThreadAscolto(CGestoreChat gestore, int porta) throws SocketException {
         this.ascolto = new DatagramSocket(porta);
         this.gestore = gestore;
@@ -39,6 +39,8 @@ public class ThreadAscolto extends Thread {
             datiStringa += new String(Arrays.copyOfRange(bufferDatiRicevuto, 0, pacchettoRicevuto.getLength()));
             
             gestore.InserisciPacchetto(datiStringa);
+            
+            System.out.println("Arrivato pacchetto " + datiStringa);
         }
     }
 }
