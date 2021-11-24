@@ -1,5 +1,6 @@
 package progettochat;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -8,6 +9,8 @@ import java.util.List;
 
 public class CGestoreChat {
     private CUDP gestoreUDP;
+    
+    public FrameGrafica frame;
     
     private List<CPacchetto> ListaPacchettiConnessione;
     private List<CPacchetto> ListaPacchettiComunicazione;
@@ -20,6 +23,9 @@ public class CGestoreChat {
 
     public CGestoreChat() throws SocketException {
         this.gestoreUDP = new CUDP();
+        
+        this.frame = null;
+        
         this.ListaPacchettiConnessione = new ArrayList<CPacchetto>();
         this.ListaPacchettiComunicazione = new ArrayList<CPacchetto>();
         this.ListaPacchettiFineConnessione = new ArrayList<CPacchetto>();
@@ -46,6 +52,14 @@ public class CGestoreChat {
         return terminaTentativoConnessione;
     }
 
+    public boolean isConnessioneLibera() {
+        return connessioneLibera;
+    }
+    
+    public void setFrame(FrameGrafica frame){
+        this.frame = frame;
+    }
+
     public void setTerminaTentativoConnessione(boolean terminaTentativoConnessione) {
         this.terminaTentativoConnessione = terminaTentativoConnessione;
     }
@@ -58,7 +72,10 @@ public class CGestoreChat {
         CPacchetto pacchettoDaInserire = CPacchetto.fromCSV(datiStringa);
         String operazione = pacchettoDaInserire.getOperazione();
         if(operazione.equals("c") || operazione.equals("y") || operazione.equals("n")) this.ListaPacchettiConnessione.add(pacchettoDaInserire);
-        else if(operazione.equals("m")) this.ListaPacchettiComunicazione.add(pacchettoDaInserire);
+        else if(operazione.equals("m")){
+            this.ListaPacchettiComunicazione.add(pacchettoDaInserire);
+            System.out.println("PACCHETTO MESSAGGIO ARRIVATO E INSERITO");
+        }
         else if(operazione.equals("e")) this.ListaPacchettiFineConnessione.add(pacchettoDaInserire);
     }
     
@@ -99,5 +116,26 @@ public class CGestoreChat {
             ThreadInstauraConnessione tic1 = new ThreadInstauraConnessione(this);
             tic1.start();
         }
+    }
+    
+    public void ChiudiConnessione() throws IOException{
+        
+        System.out.println("Chiudo la connessione");
+        this.connessioneLibera = true;
+        this.gestoreUDP.InvioPacchetto("e;", indirizzo);
+    }
+    
+    public String CercaPacchettiComunicazione(){
+        CPacchetto pacchettoTemp = null;
+        for(int i = 0; i < this.ListaPacchettiComunicazione.size(); i++){
+           pacchettoTemp = this.ListaPacchettiComunicazione.get(i);
+           this.ListaPacchettiComunicazione.remove(i);
+        }
+        if(pacchettoTemp != null) return pacchettoTemp.getMessaggio();
+        else return "";
+    }
+    
+    public void InviaMessaggio(String messaggio) throws IOException{
+        if(!this.connessioneLibera) gestoreUDP.InvioPacchetto(messaggio, indirizzo);
     }
 }

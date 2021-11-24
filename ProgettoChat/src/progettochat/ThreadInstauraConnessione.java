@@ -27,7 +27,7 @@ public class ThreadInstauraConnessione extends Thread {
             }
             //Aspetto finchè non c'è y del peer 2
             while(!gestore.isTerminaTentativoConnessione()){
-                System.out.println("Aspetto la risposta");
+                
                 
                 CPacchetto pacchettoTemp = null;
                 do{
@@ -37,6 +37,7 @@ public class ThreadInstauraConnessione extends Thread {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ThreadInstauraConnessione.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    System.out.println("Aspetto la risposta");
                 } while(pacchettoTemp == null);
                 
                 if(pacchettoTemp.getOperazione().equals("y")){
@@ -54,8 +55,8 @@ public class ThreadInstauraConnessione extends Thread {
             InviaY();
         }
         
-        ThreadRifiutaConnessione trc1 = new ThreadRifiutaConnessione(this.gestore);
-        trc1.start();
+        ThreadMessaggi tm1 = new ThreadMessaggi(gestore);
+        tm1.start();
     }
     
     public void InviaY(){
