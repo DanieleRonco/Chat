@@ -44,7 +44,7 @@ public class CPacchetto {
         String operazioneTemp = csv.substring(indice + 1, indice2);
         
         String messaggioTemp = "";
-        if(operazioneTemp.equals("c") || operazioneTemp.equals("m")) messaggioTemp = csv.substring(indice2 + 1, csv.length() - 1);
+        if(operazioneTemp.equals("c") || operazioneTemp.equals("m") || operazioneTemp.equals("y")) messaggioTemp = csv.substring(indice2 + 1, csv.length() - 1);
         
         return new CPacchetto(indirizzoTemp, operazioneTemp, messaggioTemp);
     }

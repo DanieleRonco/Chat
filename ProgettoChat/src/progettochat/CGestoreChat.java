@@ -20,6 +20,9 @@ public class CGestoreChat {
     
     private boolean connessioneLibera;
     private boolean terminaTentativoConnessione;
+    
+    private String nomeUtente;
+    private String nomeDestinatario;
 
     public CGestoreChat() throws SocketException {
         this.gestoreUDP = new CUDP();
@@ -34,6 +37,9 @@ public class CGestoreChat {
         
         this.connessioneLibera = true;
         this.terminaTentativoConnessione = false;
+        
+        this.nomeUtente = "";
+        this.nomeDestinatario = "";
     }
     
     public CUDP getGestoreUDP(){
@@ -55,6 +61,14 @@ public class CGestoreChat {
     public boolean isConnessioneLibera() {
         return connessioneLibera;
     }
+
+    public String getNomeUtente() {
+        return nomeUtente;
+    }
+
+    public String getNomeDestinatario() {
+        return nomeDestinatario;
+    }
     
     public void setFrame(FrameGrafica frame){
         this.frame = frame;
@@ -66,6 +80,14 @@ public class CGestoreChat {
 
     public void setConnessioneLibera(boolean connessioneLibera) {
         this.connessioneLibera = connessioneLibera;
+    }
+
+    public void setNomeUtente(String nomeUtente) {
+        this.nomeUtente = nomeUtente;
+    }
+
+    public void setNomeDestinatario(String nomeDestinatario) {
+        this.nomeDestinatario = nomeDestinatario;
     }
     
     synchronized public void InserisciPacchetto(String datiStringa){
@@ -123,6 +145,7 @@ public class CGestoreChat {
         System.out.println("Chiudo la connessione");
         this.connessioneLibera = true;
         this.gestoreUDP.InvioPacchetto("e;", indirizzo);
+        System.out.println("Connessione terminata");
     }
     
     public String CercaPacchettiComunicazione(){
@@ -133,6 +156,38 @@ public class CGestoreChat {
         }
         if(pacchettoTemp != null) return pacchettoTemp.getMessaggio();
         else return "";
+    }
+    
+    public boolean CercaPacchettiChiusura(){
+        for(int i = 0; i < this.ListaPacchettiFineConnessione.size(); i++){
+            int indice = this.getIndirizzoStringa().indexOf("/");
+            String indirizzoTemp = this.getIndirizzoStringa().substring(indice + 1, this.getIndirizzoStringa().length());
+            if(this.ListaPacchettiFineConnessione.get(i).getIndirizzo().equals(indirizzoTemp)){
+                this.ListaPacchettiFineConnessione.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void EliminaPacchetti() throws UnknownHostException, IOException{
+        int indice = this.getIndirizzoStringa().indexOf("/");
+        byte[] mioIndirizzo = this.getIndirizzoStringa().substring(indice + 1, this.getIndirizzoStringa().length()).getBytes();
+        for(int i = 0; i < this.ListaPacchettiComunicazione.size(); i++){
+            if(!this.ListaPacchettiComunicazione.get(i).equals(mioIndirizzo)){
+                gestoreUDP.InvioPacchetto("e;", InetAddress.getByAddress(mioIndirizzo));
+            }
+        }
+        for(int i = 0; i < this.ListaPacchettiConnessione.size(); i++){
+            if(!this.ListaPacchettiConnessione.get(i).equals(mioIndirizzo)){
+                gestoreUDP.InvioPacchetto("e;", InetAddress.getByAddress(mioIndirizzo));
+            }
+        }
+        for(int i = 0; i < this.ListaPacchettiFineConnessione.size(); i++){
+            if(!this.ListaPacchettiFineConnessione.get(i).equals(mioIndirizzo)){
+                gestoreUDP.InvioPacchetto("e;", InetAddress.getByAddress(mioIndirizzo));
+            }
+        }
     }
     
     public void InviaMessaggio(String messaggio) throws IOException{

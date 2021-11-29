@@ -5,6 +5,7 @@
  */
 package progettochat;
 
+import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ public class ThreadMessaggi extends Thread {
             String ritorno = gestore.CercaPacchettiComunicazione();
             if(ritorno != "") {
                 System.out.println("Messaggio diverso da vuoto");
-                gestore.frame.SetLabel(ritorno);
+                gestore.frame.SetLabel(gestore.getNomeDestinatario() + " " + ritorno);
             }
             
             try {
@@ -45,6 +46,21 @@ public class ThreadMessaggi extends Thread {
                 }
                 */
             } catch (InterruptedException ex) {
+                Logger.getLogger(ThreadMessaggi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            if(gestore.CercaPacchettiChiusura()){
+                try {
+                    gestore.ChiudiConnessione();
+                } catch (IOException ex) {
+                    Logger.getLogger(ThreadMessaggi.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            }
+            
+            try {
+                gestore.EliminaPacchetti();
+            } catch (IOException ex) {
                 Logger.getLogger(ThreadMessaggi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
