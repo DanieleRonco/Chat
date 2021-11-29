@@ -1,11 +1,13 @@
 package progettochat;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class FrameGrafica extends javax.swing.JFrame {
@@ -18,7 +20,7 @@ public class FrameGrafica extends javax.swing.JFrame {
         this.gestore = gestore;
         this.ta1 = ta1;
         
-        this.gestore.setFrame(this);
+        this.gestore.setFrameGrafica(this);
         
         ta1.start();
     }
@@ -57,6 +59,7 @@ public class FrameGrafica extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         jButton2.setText("Invia messaggio");
+        jButton2.setPreferredSize(new java.awt.Dimension(150, 25));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -81,46 +84,43 @@ public class FrameGrafica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 38, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(TxtMessaggio, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(302, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Connetti, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(IndirizzoIP))
-                        .addGap(28, 28, 28)
-                        .addComponent(TxtNomeUtente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BtnBloccaTentativo)
-                        .addGap(74, 74, 74)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtMessaggio))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(Connetti, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnBloccaTentativo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IndirizzoIP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TxtNomeUtente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 418, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Connetti)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(IndirizzoIP)
+                        .addComponent(TxtNomeUtente, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Connetti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IndirizzoIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtNomeUtente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(BtnBloccaTentativo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(BtnBloccaTentativo))
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(TxtMessaggio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TxtMessaggio)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         IndirizzoIP.getAccessibleContext().setAccessibleName("");
@@ -130,7 +130,7 @@ public class FrameGrafica extends javax.swing.JFrame {
 
     private void ConnettiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnettiActionPerformed
         try {
-            gestore.setNomeUtente(TxtNomeUtente.getText());
+            gestore.setMioNome(TxtNomeUtente.getText());
             gestore.InstauraConnessione(IndirizzoIP.getText());
         } catch (UnknownHostException ex) {
             Logger.getLogger(FrameGrafica.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,15 +160,22 @@ public class FrameGrafica extends javax.swing.JFrame {
     public void SetLabel(String s){
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-               //Codice da eseguire nel Thread grafico
               jLabel1.setText(s);
               
             }
         });
     }
     
-    public String getLabel(){
-        return jLabel1.getText();
+    public boolean chiedi() {
+        int result = JOptionPane.showConfirmDialog(null,"Vuoi connetterti con il dispositivo?", "Tentativo di connessione rilevato",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION){
+            return true;
+        }else if (result == JOptionPane.NO_OPTION){
+            return false;
+        }
+        return false;
     }
     
     /**
@@ -206,41 +213,7 @@ public class FrameGrafica extends javax.swing.JFrame {
             public void run() {
                 new FrameGrafica(gestoreChat, threadAscolto1).setVisible(true);
             }
-        });
-        
-        /*
-        while(c.frame==null )
-        {
-            //OTTIMIZZABILE! aspetto che venga settata dal form
-            sleep(1);
-        }
-            
-        ThreadTest t = new ThreadTest(c);
-        t.start();
-        
-        
-        
-        
-        while(this==null )
-                {
-                    //OTTIMIZZABILE! aspetto che venga settata dal form
-                    sleep(1);
-                }
-                
-                CGestoreChat GestoreChat = null;
-                try {
-                    GestoreChat = new CGestoreChat(this);
-                } catch (SocketException ex) {
-                    Logger.getLogger(FrameGrafica.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                ThreadAscolto ThreadAscolto1 = null;
-                try {
-                    ThreadAscolto1 = new ThreadAscolto(GestoreChat, 2003);
-                } catch (SocketException ex) {
-                    Logger.getLogger(FrameGrafica.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        */     
+        });     
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

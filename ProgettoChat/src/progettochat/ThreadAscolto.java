@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,6 @@ public class ThreadAscolto extends Thread {
     
     @Override
     public void run() {
-        System.out.println("INIZIO L'ASCOLTO");
         while(true){
             byte[] bufferRicevuto = new byte[1500];
             DatagramPacket pacchettoRicevuto = new DatagramPacket(bufferRicevuto, bufferRicevuto.length);
@@ -38,9 +38,11 @@ public class ThreadAscolto extends Thread {
             String datiStringa = pacchettoRicevuto.getAddress().toString() + ";";
             datiStringa += new String(Arrays.copyOfRange(bufferDatiRicevuto, 0, pacchettoRicevuto.getLength()));
             
-            gestore.InserisciPacchetto(datiStringa);
-            
-            System.out.println("Arrivato pacchetto " + datiStringa);
+            try {
+                gestore.InserisciPacchetto(datiStringa);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ThreadAscolto.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
