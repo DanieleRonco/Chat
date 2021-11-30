@@ -34,11 +34,13 @@ public class ThreadMessaggi extends Thread {
                 }
             }
             
+            /*
             try {
                 gestore.EliminaPacchetti();
             } catch (IOException ex) {
                 Logger.getLogger(ThreadMessaggi.class.getName()).log(Level.SEVERE, null, ex);
             }
+            */
         }
         gestore.frameGrafica.SetLabel("");
     }

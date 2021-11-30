@@ -18,7 +18,7 @@ public class CUDP {
         byte[] bufferRisposta = messaggio.getBytes();
         DatagramPacket pacchettoRisposta = new DatagramPacket(bufferRisposta, bufferRisposta.length);
         pacchettoRisposta.setAddress(indirizzo);
-        pacchettoRisposta.setPort(2004); //DA CAMBIARE CON 2003
+        pacchettoRisposta.setPort(2003); //DA CAMBIARE CON 2003
         gestore.send(pacchettoRisposta);
     }
     
